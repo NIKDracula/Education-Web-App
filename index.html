@@ -1,0 +1,246 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Test Prep</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Language Test Preparation</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#ielts" class="nav-link" data-section="ielts">IELTS</a></li>
+                <li><a href="#toefl" class="nav-link" data-section="toefl">TOEFL</a></li>
+                <li><a href="#ket" class="nav-link" data-section="ket">KET</a></li>
+                <li><a href="#pet" class="nav-link" data-section="pet">PET</a></li>
+                <li><a href="#grammar-rules" class="nav-link" data-section="grammar-rules">Grammar Rules</a></li>
+                <li><a href="#grammar-exercises" class="nav-link" data-section="grammar-exercises">Grammar Exercises</a></li>
+                <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="section active">
+            <h2>Welcome</h2>
+            <p>Prepare for IELTS, TOEFL, KET, and PET with interactive speaking practice, grammar lessons, and vocabulary games.</p>
+        </section>
+        <section id="ielts" class="section">
+            <h2>IELTS Speaking Practice</h2>
+            <div class="question-controls">
+                <label for="ielts-level">Select Level:</label>
+                <select id="ielts-level" class="level-select">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <button class="get-question" data-test="ielts">Get Question</button>
+            </div>
+            <div id="ielts-question" class="question-display"></div>
+            <div class="timer-controls">
+                <label for="ielts-timer">Timer (seconds):</label>
+                <input type="number" id="ielts-timer" class="timer-input" value="240" min="1">
+                <button class="start-timer" data-test="ielts">Start Timer</button>
+                <button class="stop-timer" data-test="ielts">Stop Timer</button>
+                <button class="reset-timer" data-test="ielts">Reset Timer</button>
+                <div id="ielts-timer-display" class="timer-display">240</div>
+            </div>
+        </section>
+        <section id="toefl" class="section">
+            <h2>TOEFL Speaking Practice</h2>
+            <div class="question-controls">
+                <label for="toefl-level">Select Level:</label>
+                <select id="toefl-level" class="level-select">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <button class="get-question" data-test="toefl">Get Question</button>
+            </div>
+            <div id="toefl-question" class="question-display"></div>
+            <div class="timer-controls">
+                <label for="toefl-timer">Timer (seconds):</label>
+                <input type="number" id="toefl-timer" class="timer-input" value="45" min="1">
+                <button class="start-timer" data-test="toefl">Start Timer</button>
+                <button class="stop-timer" data-test="toefl">Stop Timer</button>
+                <button class="reset-timer" data-test="toefl">Reset Timer</button>
+                <div id="toefl-timer-display" class="timer-display">45</div>
+            </div>
+        </section>
+        <section id="ket" class="section">
+            <h2>KET Speaking Practice</h2>
+            <div class="question-controls">
+                <label for="ket-level">Select Level:</label>
+                <select id="ket-level" class="level-select">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                </select>
+                <button class="get-question" data-test="ket">Get Question</button>
+            </div>
+            <div id="ket-question" class="question-display"></div>
+            <div class="timer-controls">
+                <label for="ket-timer">Timer (seconds):</label>
+                <input type="number" id="ket-timer" class="timer-input" value="180" min="1">
+                <button class="start-timer" data-test="ket">Start Timer</button>
+                <button class="stop-timer" data-test="ket">Stop Timer</button>
+                <button class="reset-timer" data-test="ket">Reset Timer</button>
+                <div id="ket-timer-display" class="timer-display">180</div>
+            </div>
+        </section>
+        <section id="pet" class="section">
+            <h2>PET Speaking Practice</h2>
+            <div class="question-controls">
+                <label for="pet-level">Select Level:</label>
+                <select id="pet-level" class="level-select">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                </select>
+                <button class="get-question" data-test="pet">Get Question</button>
+            </div>
+            <div id="pet-question" class="question-display"></div>
+            <div class="timer-controls">
+                <label for="pet-timer">Timer (seconds):</label>
+                <input type="number" id="pet-timer" class="timer-input" value="180" min="1">
+                <button class="start-timer" data-test="pet">Start Timer</button>
+                <button class="stop-timer" data-test="pet">Stop Timer</button>
+                <button class="reset-timer" data-test="pet">Reset Timer</button>
+                <div id="pet-timer-display" class="timer-display">180</div>
+            </div>
+        </section>
+        <section id="grammar-rules" class="section">
+            <h2>Grammar Rules</h2>
+            <div class="grammar-controls">
+                <label for="grammar-test">Select Exam:</label>
+                <select id="grammar-test" class="grammar-select">
+                    <option value="all">All Exams</option>
+                    <option value="IELTS">IELTS</option>
+                    <option value="TOEFL">TOEFL</option>
+                    <option value="KET">KET</option>
+                    <option value="PET">PET</option>
+                </select>
+                <button id="grammar-show">Show Errors</button>
+            </div>
+            <div id="grammar-slide-container" class="grammar-slide-container">
+                <button id="prev-slide" class="slide-nav">←</button>
+                <div id="grammar-slide" class="grammar-slide"></div>
+                <button id="next-slide" class="slide-nav">→</button>
+            </div>
+        </section>
+        <section id="grammar-exercises" class="section">
+            <h2>Grammar Exercises</h2>
+            <div class="exercise-controls">
+                <button id="get-exercise">Get Exercise</button>
+                <div id="exercise-display" class="exercise-display"></div>
+                <input type="text" id="exercise-input" class="exercise-input" placeholder="Type your answer here">
+                <button id="check-exercise">Check Answer</button>
+                <div id="exercise-feedback" class="exercise-feedback"></div>
+            </div>
+        </section>
+        <section id="games" class="section">
+            <h2>Vocabulary Games</h2>
+            <div class="game-controls">
+                <label for="game-select">Select Game:</label>
+                <select id="game-select" class="game-select">
+                    <option value="hangman">Balloon Hangman</option>
+                    <option value="tictactoe">Tic-Tac-Toe</option>
+                </select>
+                <button id="start-game">Start Game</button>
+            </div>
+            <div id="hangman-game" class="game-section" style="display: none;">
+                <h3>Balloon Hangman</h3>
+                <div id="hangman-controls" class="hangman-controls">
+                    <label for="hangman-test">Select Exam:</label>
+                    <select id="hangman-test" class="game-select">
+                        <option value="custom">Custom Word</option>
+                        <option value="ielts">IELTS</option>
+                        <option value="toefl">TOEFL</option>
+                        <option value="ket">KET</option>
+                        <option value="pet">PET</option>
+                    </select>
+                    <div id="custom-word-input" style="display: block;">
+                        <label for="wordInput">Enter the word for others to guess:</label>
+                        <input type="text" id="wordInput" placeholder="Enter a word">
+                        <button id="toggleVisibility">👁️</button>
+                    </div>
+                    <div id="word-list" class="word-list"></div>
+                    <button id="startHangman">Start Hangman</button>
+                    <div id="error" class="error"></div>
+                </div>
+                <div id="game" style="display: none;">
+                    <div id="balloons"></div>
+                    <div id="wordDisplay"></div>
+                    <div id="letters"></div>
+                </div>
+                <div id="restartContainer" style="display: none;">
+                    <button id="restartHangman">Restart Game</button>
+                </div>
+                <p>Designed by Nick Laoshi</p>
+            </div>
+            <div id="tictactoe-game" class="game-section" style="display: none;">
+                <h3>Tic-Tac-Toe</h3>
+                <div id="tictactoe-controls" class="tictactoe-controls">
+                    <label for="tictactoe-test">Select Exam:</label>
+                    <select id="tictactoe-test" class="game-select">
+                        <option value="ielts">IELTS</option>
+                        <option value="toefl">TOEFL</option>
+                        <option value="ket">KET</option>
+                        <option value="pet">PET</option>
+                    </select>
+                    <button id="startTictactoe">Start Tic-Tac-Toe</button>
+                    <div id="tictactoe-word-list" class="word-list"></div>
+                </div>
+                <div id="tictactoe-board" style="display: none;"></div>
+                <div id="tictactoe-status"></div>
+                <div id="tictactoe-restart" style="display: none;">
+                    <button id="restartTictactoe">Restart Game</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="questions.js"></script>
+    <script src="grammar.js"></script>
+    <script src="vocabulary.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

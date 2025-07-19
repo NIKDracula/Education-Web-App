@@ -1,0 +1,666 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base styles for mobile-first approach */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Header and navigation */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    margin: 0.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    background-color: #34495e;
+}
+
+nav ul li a.active {
+    background-color: #3498db;
+}
+
+/* Main content */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.section {
+    display: none;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section.active {
+    display: block;
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.section p {
+    font-size: 1.1rem;
+}
+
+/* Question controls */
+.question-controls {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.level-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.get-question {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.get-question:hover,
+.get-question:focus {
+    background-color: #2980b9;
+}
+
+.question-display {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 100px;
+    font-size: 1.1rem;
+}
+
+/* Timer controls */
+.timer-controls {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.timer-input {
+    width: 80px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.start-timer,
+.stop-timer,
+.reset-timer {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.start-timer {
+    background-color: #27ae60;
+}
+
+.start-timer:hover,
+.start-timer:focus {
+    background-color: #219653;
+}
+
+.stop-timer {
+    background-color: #e74c3c;
+}
+
+.stop-timer:hover,
+.stop-timer:focus {
+    background-color: #c0392b;
+}
+
+.reset-timer {
+    background-color: #7f8c8d;
+}
+
+.reset-timer:hover,
+.reset-timer:focus {
+    background-color: #6c7a89;
+}
+
+.timer-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* Grammar controls */
+.grammar-controls {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.grammar-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#grammar-show {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#grammar-show:hover,
+#grammar-show:focus {
+    background-color: #2980b9;
+}
+
+/* Slide container */
+.grammar-slide-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.grammar-slide {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.grammar-slide h3 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.grammar-slide p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.grammar-slide .incorrect {
+    color: #e74c3c;
+    font-style: italic;
+}
+
+.grammar-slide .correct {
+    color: #27ae60;
+    display: none;
+}
+
+.grammar-slide .correct.show {
+    display: block;
+}
+
+.grammar-slide .examples {
+    margin-top: 1rem;
+}
+
+.reveal-answer {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0.5rem 0;
+    transition: background-color 0.3s;
+}
+
+.reveal-answer:hover,
+.reveal-answer:focus {
+    background-color: #2980b9;
+}
+
+.slide-nav {
+    padding: 0.5rem 1rem;
+    background-color: #7f8c8d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.slide-nav:hover,
+.slide-nav:focus {
+    background-color: #6c7a89;
+}
+
+.slide-nav:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Exercise controls */
+.exercise-controls {
+    margin: 1rem 0;
+}
+
+#get-exercise {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#get-exercise:hover,
+#get-exercise:focus {
+    background-color: #2980b9;
+}
+
+.exercise-display {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 60px;
+    font-size: 1.1rem;
+}
+
+.exercise-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+    margin: 0.5rem 0;
+}
+
+#check-exercise {
+    padding: 0.5rem 1rem;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#check-exercise:hover,
+#check-exercise:focus {
+    background-color: #219653;
+}
+
+.exercise-feedback {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+/* Game controls */
+.game-controls {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.game-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#start-game {
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#start-game:hover,
+#start-game:focus {
+    background-color: #2980b9;
+}
+
+/* Hangman styles */
+.hangman-controls {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#custom-word-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#wordInput {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+}
+
+#toggleVisibility {
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #7f8c8d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#toggleVisibility:hover,
+#toggleVisibility:focus {
+    background-color: #6c7a89;
+}
+
+#startHangman,
+#restartHangman {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#startHangman:hover,
+#startHangman:focus,
+#restartHangman:hover,
+#restartHangman:focus {
+    background-color: #2980b9;
+}
+
+.word-list {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.word-list p {
+    margin: 0.5rem 0;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+#balloons img {
+    width: 5vw;
+    max-width: 50px;
+    margin: 0.5rem;
+    vertical-align: middle;
+}
+
+#letters button {
+    font-size: 1.5rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    background-color: #ecf0f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#letters button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+#wordDisplay {
+    font-size: 2rem;
+    margin: 1rem 0;
+    font-weight: bold;
+}
+
+/* Tic-Tac-Toe styles */
+.tictactoe-controls {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#startTictactoe,
+#restartTictactoe {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#startTictactoe:hover,
+#startTictactoe:focus,
+#restartTictactoe:hover,
+#restartTictactoe:focus {
+    background-color: #2980b9;
+}
+
+#tictactoe-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 5px; /* Increased gap for better separation */
+    margin: 1rem auto;
+    justify-content: center;
+    max-width: 450px; /* Increased from 300px to 450px */
+    width: 100%;
+}
+
+.tictactoe-cell {
+    width: 100%;
+    height: 150px; /* Increased from 100px to 150px */
+    background-color: #f9f9f9;
+    border: 2px solid #2c3e50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5vw; /* Base font size relative to viewport width */
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: normal;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.tictactoe-cell.x,
+.tictactoe-cell.o {
+    background-color: inherit; /* Reset background to avoid overlap issues */
+    font-size: 2rem; /* Fixed font size for X and O */
+    color: white; /* Ensure contrast */
+}
+
+.tictactoe-cell.x {
+    background-color: #3498db;
+}
+
+.tictactoe-cell.o {
+    background-color: #27ae60;
+}
+
+.tictactoe-cell:hover {
+    background-color: #ecf0f1;
+}
+
+#tictactoe-status {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Accessibility */
+a:focus,
+button:focus,
+select:focus,
+input:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Responsive design for larger screens */
+@media (min-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    nav ul li {
+        margin: 0 1rem;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+    }
+
+    .section h3 {
+        font-size: 1.5rem;
+    }
+
+    .section p {
+        font-size: 1.2rem;
+    }
+
+    .grammar-slide h3 {
+        font-size: 2rem;
+    }
+
+    .grammar-slide p {
+        font-size: 1.3rem;
+    }
+
+    #balloons img {
+        width: 4vw;
+        max-width: 40px;
+    }
+
+    #letters button {
+        font-size: 2rem;
+        padding: 0.75rem;
+    }
+
+    #wordDisplay {
+        font-size: 2.5rem;
+    }
+
+    .tictactoe-cell {
+        height: 180px; /* Increased from 120px */
+        font-size: 1.2vw;
+    }
+
+    #tictactoe-board {
+        max-width: 540px; /* Increased from 360px */
+    }
+}
+
+@media (max-width: 400px) {
+    #balloons img {
+        width: 8vw;
+        max-width: 30px;
+    }
+
+    .tictactoe-cell {
+        height: 120px; /* Increased from 80px */
+        font-size: 2vw;
+    }
+
+    #tictactoe-board {
+        max-width: 360px; /* Increased from 240px */
+    }
+}
